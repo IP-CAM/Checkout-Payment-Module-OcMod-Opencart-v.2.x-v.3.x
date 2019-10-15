@@ -1,0 +1,61 @@
+{{ header }}<body onload="document.doku_form.submit()">
+{{ column_left }}
+{{ column_right }}
+
+<div class="container"> {{ content_top }}
+<form id="doku_form" name="doku_form" action="{{ oco_action }}" method="post">
+  <input type=hidden name="MALLID" value="{{ oco_mallid }}">
+  <input type=hidden name="CHAINMERCHANT" value="{{ oco_chain }}">
+  <input type=hidden name="AMOUNT" value="{{ oco_amount }}">
+  <input type=hidden name="PURCHASEAMOUNT" value="{{ oco_amount }}">
+  <input type=hidden name="TRANSIDMERCHANT" value="{{ oco_transidmerchant }}">
+  <input type=hidden name="WORDS" value="{{ oco_words }}">
+  <input type=hidden name="REQUESTDATETIME" value="{{ oco_request_datetime }}">
+  <input type=hidden name="CURRENCY" value="{{ oco_currency }}">
+  <input type=hidden name="PURCHASECURRENCY" value="{{ oco_currency }}">
+  <input type=hidden name="SESSIONID" value="{{ oco_session_id }}">
+  <input type=hidden name="NAME" value="{{ oco_allname }}">
+  <input type=hidden name="PAYMENTCHANNEL" value="{{ paymentchannel }}">
+  <input type=hidden name="EMAIL" value="{{ email }}">
+  <input type=hidden name="HOMEPHONE" value="{{ telephone }}">
+  <input type=hidden name="WORKPHONE" value="{{ telephone }}">
+  <input type=hidden name="MOBILEPHONE" value="{{ telephone }}">
+  <input type=hidden name="BASKET" value="{{ data_product  }}">
+  <input type=hidden name="ADDRESS" value="{{ oco_address }}">
+  <input type=hidden name="CITY" value="{{ oco_city  }}">
+  <input type=hidden name="STATE" value="{{ oco_zone  }}">
+  <input type=hidden name="ZIPCODE" value="{{ oco_postcode  }}">
+  
+  {% if paymentchannel==16 %}
+  <input type=hidden name="CUSTOMERID" value="{{ email  }}">
+  {% endif %}
+
+  {% if paymentchannel==37 %}
+  <input type=hidden name="SHIPPING_COUNTRY" value="ID">
+  <input type=hidden name="SHIPPING_ADDRESS" value="{{ oco_address  }}">
+  <input type=hidden name="SHIPPING_CITY" value="{{ oco_city  }}">
+  <input type=hidden name="SHIPPING_ZIPCODE" value="{{ oco_postcode  }}">
+  {% endif %}
+
+  {% if acquirer!=0 %}
+  <input type=hidden name="INSTALLMENT_ACQUIRER" value="{{acquirer}}">
+  <input type=hidden name="PROMOID" value="{{ promo }}">
+  <input type=hidden name="TENOR" value="{{ tenor }}">
+  {% endif %}  
+
+  {% if type==1 %}
+  <input type=hidden name="PAYMENTTYPE" value="OFFUSINSTALLMENT">
+  {% endif %}  
+
+  
+</br></br></br></br></br></br>
+  <div align="center">Please wait, this page will redirect to DOKU
+  </br></br></br>
+<input type="submit" name="continue" value="Continue" class="button">
+</form>
+  </div>
+</br></br></br></br></br></br></br></br></br>
+  {{ content_bottom }}
+</div>
+	
+{{ footer }}

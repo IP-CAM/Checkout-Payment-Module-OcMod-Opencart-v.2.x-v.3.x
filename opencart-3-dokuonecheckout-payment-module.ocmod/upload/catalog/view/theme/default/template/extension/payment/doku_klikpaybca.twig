@@ -1,0 +1,27 @@
+{{ header }}<body onload="document.doku_form.submit()">
+{{ column_left }}
+{{ column_right }}
+
+<div class="container"> {{ content_top }}
+<form id="doku_form" name="doku_form" action="{{ bca_action }}" method="post">
+  <input type=hidden name="descp" value="{{ descp }}">
+  <input type=hidden name="klikPayCode" value="{{ klikPayCode }}">
+  <input type=hidden name="callback" value="{{ callback }}">
+  <input type=hidden name="totalAmount" value="{{ totalAmount }}">
+  <input type=hidden name="payType" value="{{ payType }}">
+  <input type=hidden name="transactionNo" value="{{ transactionNo }}">
+  <input type=hidden name="signature" value="{{ signature }}">
+  <input type=hidden name="transactionDate" value="{{ transactionDate }}">
+  <input type=hidden name="currency" value="{{ currency }}">
+  
+</br></br></br></br></br></br>
+  <div align="center">Please wait, this page will redirect to KlikpayBCA
+  </br></br></br>
+<input type="submit" name="continue" value="Continue" class="button">
+</form>
+  </div>
+</br></br></br></br></br></br></br></br></br>
+  {{ content_bottom }}
+</div>
+	
+{{ footer }}

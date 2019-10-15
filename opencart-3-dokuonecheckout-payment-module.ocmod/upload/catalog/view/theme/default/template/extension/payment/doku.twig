@@ -1,0 +1,213 @@
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+$( "#doku_submit" ).click(function() {
+    $.post( "{{ urlSetProses }}", { TRANSIDMERCHANT: "{{ oco_transidmerchant }}" }, function( data ) {
+        document.doku_form.submit();
+    });
+});
+
+});
+
+</script>
+
+<form id="doku_form" name="doku_form" action="{{ urlLocal }}" method="post">
+
+  <div class="buttons">
+  {% if payment_select==0 %}
+      <a>{{select_payment}}</a><br><br>
+          <ul><input type="radio" name="PAYMENTCHANNEL" value="" checked>   &nbsp;&nbsp; <img src='catalog/view/theme/default/image/doku/doku.png' style='width:80px;'> &nbsp;&nbsp; {{ payment_doku_name }}</ul>
+
+            {% if payment_list[1]==15 and payment_token==1 %}
+                      <ul><input type="radio" name="PAYMENTCHANNEL" value="15">   &nbsp;&nbsp; <img src='catalog/view/theme/default/image/doku/15.png' style='width:80px;'> &nbsp;&nbsp; {{ payment_name[15] }}</ul>
+            {% endif %}
+
+            {% if payment_list[7]==18 %}
+                      <ul><input type="radio" name="PAYMENTCHANNEL" value="18">   &nbsp;&nbsp; <img src='catalog/view/theme/default/image/doku/18.png' style='width:80px;'> &nbsp;&nbsp; {{ payment_name[18] }}</ul>
+            {% endif %}
+
+            {% if payment_list[9]==37 %}
+                      <ul><input type="radio" name="PAYMENTCHANNEL" value="37">   &nbsp;&nbsp; <img src='catalog/view/theme/default/image/doku/37.png' style='width:80px;'> &nbsp;&nbsp; {{ payment_name[37] }}</ul>
+            {% endif %}
+            
+            {% if payment_list[22]==40 %}
+                      <ul><input type="radio" name="PAYMENTCHANNEL" value="40">   &nbsp;&nbsp; <img src='catalog/view/theme/default/image/doku/40.png' style='width:80px;'> &nbsp;&nbsp; {{ payment_name[40] }}</ul>
+            {% endif %}
+            
+            {% if payment_list[23]==22 %}
+                      <ul><input type="radio" name="PAYMENTCHANNEL" value="22">   &nbsp;&nbsp; <img src='catalog/view/theme/default/image/doku/22.png' style='width:80px;'> &nbsp;&nbsp; {{ payment_name[22] }}</ul>
+            {% endif %}
+            
+              {% if status_installment==1 %}
+               <a>Credit Card With Installment</a>&nbsp;&nbsp;<img src='catalog/view/theme/default/image/doku/visa-master.png' style='width:80px;'><br><br>
+          {% set account_row = 0 %}
+            {% for key,value in installment %}
+            {% if value.acquirer_code %}
+             <ul><input type="radio" name="PAYMENTCHANNEL" value="{{ value.acquirer_code }}_{{ value.promo_code}}_{{ value.tenor }}_{{ value.type}}"> {{ value.installment_name }}</ul>
+             {% set account_row = account_row + 1 %}
+             {% endif %}
+             {% endfor %}
+        {% endif %}       
+
+
+        {% else %}
+      {% set m = 1 %}
+      <a><h4>{{select_payment}}</h4></a><br>
+      {% set n = 1 %}
+      {% for key,value in payment_list %}
+      {% if n==1 %}
+      {% set label = '<a>Payment With Virtual Account</a><br>' %}
+      {% else %}
+      {% set label = '' %}
+      {% endif %}
+            
+      {% if m==1 %}
+      {% set flag = 'checked' %}
+      {% else %}
+      {% set flag = '' %}
+      {% endif %}
+
+
+      {% if value %}
+          {% if payment_categori[value]=='Payment With Virtual Account' %}
+          {{ label }}
+          <ul><input type="radio" name="PAYMENTCHANNEL" value="{{ value }}" {{ flag }}>  &nbsp;&nbsp; <img src='catalog/view/theme/default/image/doku/{{value}}.png' style='width:80px;'> &nbsp;&nbsp; {{ payment_name[value] }}</ul>
+          {% set m = m + 1 %}
+          {% set n = n + 1 %}
+          {% endif %}
+      {% endif %}
+    {% endfor %}
+
+      {% set n = 1 %}
+      {% for key,value in payment_list %}
+      {% if n==1 %}
+      {% set label = '<a>Payment With Convenience Store</a><br>' %}
+      {% else %}
+      {% set label = '' %}
+      {% endif %}
+
+      {% if m==1 %}
+      {% set flag = 'checked' %}
+      {% else %}
+      {% set flag = '' %}
+      {% endif %}
+
+
+      {% if value %}
+          {% if payment_categori[value]=='Payment With Convenience Store' %}
+          {{ label }}
+          <ul><input type="radio" name="PAYMENTCHANNEL" value="{{ value }}" {{ flag }}>  &nbsp;&nbsp; <img src='catalog/view/theme/default/image/doku/{{value}}.png' style='width:80px;'> &nbsp;&nbsp; {{ payment_name[value] }}</ul>
+          {% set m = m + 1 %}
+          {% set n = n + 1 %}
+          {% endif %}
+      {% endif %}
+    {% endfor %}
+
+      {% set n = 1 %}
+      {% for key,value in payment_list %}
+      {% if n==1 %}
+      {% set label = '<a>Payment With Internet Banking</a><br>' %}
+      {% else %}
+      {% set label = '' %}
+      {% endif %}
+
+      {% if m==1 %}
+      {% set flag = 'checked' %}
+      {% else %}
+      {% set flag = '' %}
+      {% endif %}
+
+
+      {% if value %}
+          {% if payment_categori[value]=='Payment With Internet Banking' %}
+          {{ label }}
+          <ul><input type="radio" name="PAYMENTCHANNEL" value="{{ value }}" {{ flag }}>  &nbsp;&nbsp; <img src='catalog/view/theme/default/image/doku/{{value}}.png' style='width:80px;'> &nbsp;&nbsp; {{ payment_name[value] }}</ul>
+          {% set m = m + 1 %}
+          {% set n = n + 1 %}
+          {% endif %}
+      {% endif %}
+    {% endfor %}
+
+      {% set n = 1 %}
+      {% for key,value in payment_list %}
+      {% if n==1 %}
+      {% set label = '<a>Payment With Cardless Credit</a><br>' %}
+      {% else %}
+      {% set label = '' %}
+      {% endif %}
+
+      {% if m==1 %}
+      {% set flag = 'checked' %}
+      {% else %}
+      {% set flag = '' %}
+      {% endif %}
+
+
+      {% if value %}
+          {% if payment_categori[value]=='Payment With Cardless Credit' %}
+          {{ label }}
+          <ul><input type="radio" name="PAYMENTCHANNEL" value="{{ value }}" {{ flag }}>  &nbsp;&nbsp; <img src='catalog/view/theme/default/image/doku/{{value}}.png' style='width:80px;'> &nbsp;&nbsp; {{ payment_name[value] }}</ul>
+          {% set m = m + 1 %}
+          {% set n = n + 1 %}
+          {% endif %}
+      {% endif %}
+    {% endfor %}
+
+      {% set n = 1 %}
+      {% for key,value in payment_list %}
+      {% if n==1 %}
+      {% set label = '<a>Payment With Wallet</a><br>' %}
+      {% else %}
+      {% set label = '' %}
+      {% endif %}
+
+      {% if m==1 %}
+      {% set flag = 'checked' %}
+      {% else %}
+      {% set flag = '' %}
+      {% endif %}
+
+
+      {% if value %}
+          {% if payment_categori[value]=='Payment With Wallet' %}
+          {{ label }}
+          <ul><input type="radio" name="PAYMENTCHANNEL" value="{{ value }}" {{ flag }}>  &nbsp;&nbsp; <img src='catalog/view/theme/default/image/doku/{{value}}.png' style='width:80px;'> &nbsp;&nbsp; {{ payment_name[value] }}</ul>
+          {% set m = m + 1 %}
+          {% set n = n + 1 %}
+          {% endif %}
+      {% endif %}
+    {% endfor %}
+
+      {% set n = 1 %}
+      {% set label = "<a>Payment With Credit Card</a>&nbsp;&nbsp; <img src='catalog/view/theme/default/image/doku/15.png' style='width:80px;'><br><br>" %}
+
+        {% if payment_list[1]==15 %}
+        {{ label }}
+        <ul><input type="radio" name="PAYMENTCHANNEL" value="15"> {{ payment_name[15] }}</ul>
+        {% set n = n + 1 %}
+        {% endif %}
+        {% if status_installment==1 %}
+          {% set account_row = 0 %}
+            {% for key,value in installment %}
+            {% if value.acquirer_code %}
+                  {% if n==1 %}
+                  {% else %}
+                  {% set label = '' %}
+                  {% endif %}
+                  {{ label }}
+             <ul><input type="radio" name="PAYMENTCHANNEL" value="{{ value.acquirer_code }}_{{ value.promo_code}}_{{ value.tenor }}_{{ value.type}}"> {{ value.installment_name }}</ul>
+             {% set n = n + 1 %}
+             {% set account_row = account_row + 1 %}
+             {% endif %}
+             {% endfor %}
+        {% endif %}       
+
+      {% endif %} 
+  </div>
+  <div class="buttons">
+    <div class="pull-right">
+          <input type="submit" id ="doku_submit" value="{{ button_confirm }}" class="btn btn-primary" />
+    </div>
+  </div>
+</form>

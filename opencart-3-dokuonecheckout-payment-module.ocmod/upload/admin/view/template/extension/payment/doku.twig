@@ -1,0 +1,880 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-doku-onecheckout" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}   
+    <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-doku" class="form-horizontal">
+      <input type="hidden" name="payment_doku_companyid" value=2>
+        
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ server_params }}</h3>
+      </div>
+      <div class="panel-body">
+        
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="payment_doku_status">{{ entry_status }}</label>      
+            <div class="col-sm-10">
+                <select name="payment_doku_status" id="payment_doku_status" class="form-control">
+                  {% if payment_doku_status %}
+                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                  <option value="0">{{ text_disabled }}</option>
+                  {% else %}
+                  <option value="1">{{ text_enabled }}</option>
+                  <option value="0" selected="selected">{{ text_disabled }}</option>
+                  {% endif %}
+                </select>               
+            </div>
+        </div>
+
+        <div class="form-group required">       
+            <label class="col-sm-2 control-label" for="payment_doku_server_set">Choose Server Destination</label>                 
+            <div class="col-sm-10">     
+                <select name="payment_doku_server_set" id="payment_doku_server_set" class="form-control">
+                  {% if payment_doku_server_set %}
+                  <option value="1" selected="selected">Production</option>
+                  <option value="0">Development</option>
+                  {% else %}
+                  <option value="1">Production</option>
+                  <option value="0" selected="selected">Development</option>
+                  {% endif %}
+                </select>                           
+            </div>            
+        </div>
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">{{ entry_mallid }}</label>      
+            <div class="col-sm-10">
+                <input type="text" name="payment_doku_mallid" id="payment_doku_mallid" value="{{  payment_doku_mallid=='' ? '99999999' : payment_doku_mallid  }}" placeholder="Input your Mall ID here" class="form-control" />
+              {% if error_mallid %}
+              <div class="text-danger">{{ error_mallid }}</div>
+              {% endif %}
+            </div>     
+        </div>
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">{{ entry_chain }}</label>      
+            <div class="col-sm-10">
+                <input type="text" name="payment_doku_chain" id="payment_doku_chain" value="{{  payment_doku_chain=='' ? 'NA' : payment_doku_chain  }}" placeholder="Input your Chain ID here" class="form-control" />
+              {% if error_chain %}
+              <div class="text-danger">{{ error_chain }}</div>
+              {% endif %}
+            </div>     
+        </div>
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">{{ entry_shared }}</label>      
+            <div class="col-sm-10">
+                <input type="text" name="payment_doku_shared" id="payment_doku_shared" value="{{  payment_doku_shared=='' ? '99999999' : payment_doku_shared  }}" placeholder="Input your Sharedkey here" class="form-control" />
+              {% if error_shared %}
+              <div class="text-danger">{{ error_shared }}</div>
+              {% endif %}
+            </div>     
+        </div>
+
+      </div>
+    </div>  
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ opencart_params }}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">{{ entry_review_edu }}</label>     
+            <div class="col-sm-10">
+                <select name="payment_doku_review" id="payment_doku_review" class="form-control">
+                {% if payment_doku_review %}
+                  <option value="1" selected="selected">Yes</option>
+                  <option value="0">No</option>
+                  {% else %}
+                  <option value="1">Yes</option>
+                  <option value="0" selected="selected">No</option>
+                  {% endif %}
+                </select>                                       
+                <span class="breadcrumb">Are you using DOKU EDU Services? No if you unsure.</span>
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">{{ entry_identify }}</label>     
+            <div class="col-sm-10">
+                <select name="payment_doku_identify" id="payment_doku_identify" class="form-control">
+                {% if payment_doku_identify %}
+                  <option value="1" selected="selected">Yes</option>
+                  <option value="0">No</option>
+                  {% else %}
+                  <option value="1">Yes</option>
+                  <option value="0" selected="selected">No</option>
+                  {% endif %}
+                </select>                                       
+                <span class="breadcrumb">Are you using Identify process? No if you unsure.</span>
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">{{ entry_tokenization }}</label>     
+            <div class="col-sm-10">
+                <select name="payment_doku_tokenization" id="payment_doku_tokenization" class="form-control">
+                {% if payment_doku_tokenization %}
+                  <option value="1" selected="selected">Yes</option>
+                  <option value="0">No</option>
+                  {% else %}
+                  <option value="1">Yes</option>
+                  <option value="0" selected="selected">No</option>
+                  {% endif %}
+                </select>                                       
+                <span class="breadcrumb">Are you using Tokenization Credit Card process? No if you unsure.</span>
+            </div>            
+        </div>
+        
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="payment_doku_geo_zone_id">{{ entry_geo_zone }}</label>
+            <div class="col-sm-10">
+                <select name="payment_doku_geo_zone_id" id="payment_doku_geo_zone_id" class="form-control">
+                  <option value="0">{{ text_all_zones }}</option>
+                {% for geo_zone in geo_zones %}
+                {% if geo_zone.geo_zone_id == payment_doku_geo_zone_id %}
+                <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                {% else %}
+                <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+                {% endif %}
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+            <div class="col-sm-10">
+                <input type="text" name="payment_doku_sort_order" value="{{ payment_doku_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+            </div>
+        </div>
+      </div>
+    </div>  
+
+   <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ paymentchannel_params }}</h3>
+      </div>
+      <div class="panel-body">
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">{{ entry_doku_name }}</label>      
+            <div class="col-sm-10">
+                <input type="text" name="payment_doku_name" id="payment_doku_name" value="{{  payment_doku_name=='' ? 'DOKU Payment Gateway' : payment_doku_name }}" placeholder="Input Name Payment here" class="form-control" />           
+              {% if error_doku_name %}
+              <div class="text-danger">{{ error_doku_name }}</div>
+              {% endif %}
+            </div> 
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="payment_doku_channel_select">{{ paymentchannel_selection }}</label>
+            <div class="col-sm-10">
+                <select name="payment_doku_channel_select" id="payment_doku_channel_select" class="form-control">
+                  {% if payment_doku_channel_select %}
+                  <option value="1" selected="selected">Selected</option>
+                  <option value="0">All</option>
+                  {% else %}
+                  <option value="1">Selected</option>
+                  <option value="0" selected="selected">All</option>
+                  {% endif %}
+                </select>                                       
+            </div>
+        </div>        
+
+        <div class="form-group">
+            <label class="control-label" style="margin-left: 30px;">If using 'Selected' payment channel, please choose payment channel to display</label>     
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">Credit Card channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[1]" id="payment_doku_channel_list[1]" class="form-control">
+                {% if payment_doku_channel_list[1] %}
+                  <option value="15" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="15">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[15]" value="{{  payment_doku_channel_name_list[15]=='' ? 'Visa / Master Credit Card' : payment_doku_channel_name_list[15]  }}" placeholder="Input channel name Visa/master credit card" class="form-control">
+                <input type="hidden" name="payment_doku_channel_categori[15]" value="Payment With Credit Card">  
+                <input type="hidden" name="payment_doku_channel_categori[16]" value="Payment With Credit Card">  
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">Mandiri Clickpay channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[2]" id="payment_doku_channel_list[2]" class="form-control">
+                {% if payment_doku_channel_list[2] %}
+                  <option value="02" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="02">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[02]" value="{{  payment_doku_channel_name_list[02]=='' ? 'Mandiri Clickpay' : payment_doku_channel_name_list[02]  }}" placeholder="Input channel name Mandiri Clickpay" class="form-control">
+                <input type="hidden" name="payment_doku_channel_categori[02]" value="Payment With Internet Banking">
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">DokuWallet channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[3]" id="payment_doku_channel_list[3]" class="form-control">
+                {% if payment_doku_channel_list[3] %}
+                  <option value="04" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="04">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[04]" value="{{  payment_doku_channel_name_list[04]=='' ? 'DokuWallet' : payment_doku_channel_name_list[04]  }}" placeholder="Input channel name DokuWallet" class="form-control">  
+                <input type="hidden" name="payment_doku_channel_categori[04]" value="Payment With Wallet">
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">Epay BRI channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[4]" id="payment_doku_channel_list[4]" class="form-control">
+                {% if payment_doku_channel_list[4] %}
+                  <option value="06" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="06">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[06]" value="{{  payment_doku_channel_name_list[06]=='' ? 'Epay BRI' : payment_doku_channel_name_list[06]  }}" placeholder="Input channel name Epay BRI" class="form-control">
+                <input type="hidden" name="payment_doku_channel_categori[06]" value="Payment With Internet Banking">  
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">Doku Alfa channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[5]" id="payment_doku_channel_list[5]" class="form-control">
+                {% if payment_doku_channel_list[5] %}
+                  <option value="35" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="35">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[35]" value="{{  payment_doku_channel_name_list[35]=='' ? 'Alfa Group' : payment_doku_channel_name_list[35]  }}" placeholder="Input channel name Doku Alfa" class="form-control">
+                <input type="hidden" name="payment_doku_channel_categori[35]" value="Payment With Convenience Store">  
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">VA Permata channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[6]" id="payment_doku_channel_list[6]" class="form-control">
+                {% if payment_doku_channel_list[6] %}
+                  <option value="36" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="36">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[36]" value="{{  payment_doku_channel_name_list[36]=='' ? 'Bank Transfer Permata Bank' : payment_doku_channel_name_list[36]  }}" placeholder="Input channel name VA Permata" class="form-control">  
+                <input type="hidden" name="payment_doku_channel_categori[36]" value="Payment With Virtual Account">
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">BCA Klikpay channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[7]" id="payment_doku_channel_list[7]" class="form-control">
+                {% if payment_doku_channel_list[7] %}
+                  <option value="18" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="18">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[18]" value="{{  payment_doku_channel_name_list[18]=='' ? 'BCA Klikpay' : payment_doku_channel_name_list[18]  }}" placeholder="Input channel name BCA Klikpay" class="form-control">  
+                <input type="hidden" name="payment_doku_channel_categori[18]" value="Payment With Internet Banking">
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">Indomaret channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[8]" id="payment_doku_channel_list[8]" class="form-control">
+                {% if payment_doku_channel_list[8] %}
+                  <option value="31" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="31">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[31]" value="{{  payment_doku_channel_name_list[31]=='' ? 'Indomaret' : payment_doku_channel_name_list[31]  }}" placeholder="Input channel name Indomaret" class="form-control">  
+                <input type="hidden" name="payment_doku_channel_categori[31]" value="Payment With Convenience Store">
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">Kredivo channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[9]" id="payment_doku_channel_list[9]" class="form-control">
+                {% if payment_doku_channel_list[9] %}
+                  <option value="37" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="37">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[37]" value="{{  payment_doku_channel_name_list[37]=='' ? 'Kredivo' : payment_doku_channel_name_list[37]  }}" placeholder="Input channel name Kredivo" class="form-control">
+                <input type="hidden" name="payment_doku_channel_categori[37]" value="Payment With Cardless Credit">  
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">VA BCA channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[10]" id="payment_doku_channel_list[10]" class="form-control">
+                {% if payment_doku_channel_list[10] %}
+                  <option value="29" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="29">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[29]" value="{{  payment_doku_channel_name_list[29]=='' ? 'Bank Transfer BCA' : payment_doku_channel_name_list[29]  }}" placeholder="Input channel name Bank Transfer BCA" class="form-control">  
+                <input type="hidden" name="payment_doku_channel_categori[29]" value="Payment With Virtual Account">
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">Internet Banking Muamalat channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[11]" id="payment_doku_channel_list[11]" class="form-control">
+                {% if payment_doku_channel_list[11] %}
+                  <option value="25" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="25">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[25]" value="{{  payment_doku_channel_name_list[25]=='' ? 'Internet Banking Muamalat' : payment_doku_channel_name_list[25]  }}" placeholder="Input channel name Internet Banking Muamalat" class="form-control">  
+                <input type="hidden" name="payment_doku_channel_categori[25]" value="Payment With Internet Banking">
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">Internet Banking Danamon channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[12]" id="payment_doku_channel_list[12]" class="form-control">
+                {% if payment_doku_channel_list[12] %}
+                  <option value="26" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="26">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[26]" value="{{  payment_doku_channel_name_list[26]=='' ? 'Internet Banking Danamon' : payment_doku_channel_name_list[26]  }}" placeholder="Input channel name Internet Banking Danamon" class="form-control">  
+                <input type="hidden" name="payment_doku_channel_categori[26]" value="Payment With Internet Banking">
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">Internet Banking Permata channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[13]" id="payment_doku_channel_list[13]" class="form-control">
+                {% if payment_doku_channel_list[13] %}
+                  <option value="28" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="28">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[28]" value="{{  payment_doku_channel_name_list[28]=='' ? 'Internet Banking Permata' : payment_doku_channel_name_list[28]  }}" placeholder="Input channel name Internet Banking Permata" class="form-control">
+                <input type="hidden" name="payment_doku_channel_categori[28]" value="Payment With Internet Banking">  
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">Internet Banking CIMB Click channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[14]" id="payment_doku_channel_list[14]" class="form-control">
+                {% if payment_doku_channel_list[14] %}
+                  <option value="19" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="19">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[19]" value="{{  payment_doku_channel_name_list[19]=='' ? 'Internet Banking CIMB Click' : payment_doku_channel_name_list[19]  }}" placeholder="Input channel name Internet Banking CIMB Click" class="form-control">
+                <input type="hidden" name="payment_doku_channel_categori[19]" value="Payment With Internet Banking">  
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">VA CIMB Niaga channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[15]" id="payment_doku_channel_list[15]" class="form-control">
+                {% if payment_doku_channel_list[15] %}
+                  <option value="32" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="32">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[32]" value="{{  payment_doku_channel_name_list[32]=='' ? 'Bank Transfer CIMB Niaga' : payment_doku_channel_name_list[32]  }}" placeholder="Input channel name Bank Transfer CIMB Niaga" class="form-control">  
+                <input type="hidden" name="payment_doku_channel_categori[32]" value="Payment With Virtual Account">
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">VA Danamon channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[16]" id="payment_doku_channel_list[16]" class="form-control">
+                {% if payment_doku_channel_list[16] %}
+                  <option value="33" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="33">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[33]" value="{{  payment_doku_channel_name_list[33]=='' ? 'Bank Transfer Danamon' : payment_doku_channel_name_list[33]  }}" placeholder="Input channel name Bank Transfer Danamon" class="form-control">
+                <input type="hidden" name="payment_doku_channel_categori[33]" value="Payment With Virtual Account">  
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">VA BRI channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[17]" id="payment_doku_channel_list[17]" class="form-control">
+                {% if payment_doku_channel_list[17] %}
+                  <option value="34" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="34">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[34]" value="{{  payment_doku_channel_name_list[34]=='' ? 'Bank Transfer BRI' : payment_doku_channel_name_list[34]  }}" placeholder="Input channel name Bank Transfer BRI" class="form-control">
+                <input type="hidden" name="payment_doku_channel_categori[34]" value="Payment With Virtual Account">  
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">VA Mandiri channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[18]" id="payment_doku_channel_list[18]" class="form-control">
+                {% if payment_doku_channel_list[18] %}
+                  <option value="41" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="41">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[41]" value="{{  payment_doku_channel_name_list[41]=='' ? 'Bank Transfer Mandiri' : payment_doku_channel_name_list[41]  }}" placeholder="Input channel name Bank Transfer Mandiri" class="form-control">
+                <input type="hidden" name="payment_doku_channel_categori[41]" value="Payment With Virtual Account">  
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">VA QNB channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[19]" id="payment_doku_channel_list[19]" class="form-control">
+                {% if payment_doku_channel_list[19] %}
+                  <option value="42" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="42">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[42]" value="{{  payment_doku_channel_name_list[42]=='' ? 'Bank Transfer QNB' : payment_doku_channel_name_list[42]  }}" placeholder="Input channel name Bank Transfer QNB" class="form-control">  
+                <input type="hidden" name="payment_doku_channel_categori[42]" value="Payment With Virtual Account">
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">VA BTN channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[20]" id="payment_doku_channel_list[20]" class="form-control">
+                {% if payment_doku_channel_list[20] %}
+                  <option value="43" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="43">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[43]" value="{{  payment_doku_channel_name_list[43]=='' ? 'Bank Transfer BTN' : payment_doku_channel_name_list[43]  }}" placeholder="Input channel name Bank Transfer BTN" class="form-control">  
+                <input type="hidden" name="payment_doku_channel_categori[43]" value="Payment With Virtual Account">
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">VA MayBank channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[21]" id="payment_doku_channel_list[21]" class="form-control">
+                {% if payment_doku_channel_list[21] %}
+                  <option value="44" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="44">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-7">
+                <input type="text" name="payment_doku_channel_name_list[44]" value="{{  payment_doku_channel_name_list[44]=='' ? 'Bank Transfer MayBank' : payment_doku_channel_name_list[44]  }}" placeholder="Input channel name Bank Transfer MayBank" class="form-control">  
+                <input type="hidden" name="payment_doku_channel_categori[44]" value="Payment With Virtual Account">
+            </div>            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">VA BNI channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[22]" id="payment_doku_channel_list[22]" class="form-control">
+                {% if payment_doku_channel_list[22] %}
+                  <option value="40" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="40">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-4">
+                <input type="text" name="payment_doku_channel_name_list[40]" value="{{  payment_doku_channel_name_list[40]=='' ? 'Bank Transfer BNI' : payment_doku_channel_name_list[40]  }}" placeholder="Input channel name Bank Transfer BNI" class="form-control">  
+                <input type="hidden" name="payment_doku_channel_categori[40]" value="Payment With Virtual Account">
+                </div>
+                <div class="col-sm-3">
+                <input type="text" name="payment_doku_bin_list[40]" value="{{  payment_doku_bin_list[40]=='' ? '99999' : payment_doku_bin_list[40]  }}" placeholder="Input bin Bank Transfer BNI" class="form-control">  
+                </div>                        
+            
+        </div>
+
+        <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">VA Sinarmas channel :</label>      
+            <div class="col-sm-3">
+                <select name="payment_doku_channel_list[23]" id="payment_doku_channel_list[23]" class="form-control">
+                {% if payment_doku_channel_list[23] %}
+                  <option value="22" selected="selected">Enable</option>
+                  <option value="">Disable</option>
+                  {% else %}
+                  <option value="22">Enable</option>
+                  <option value="" selected="selected">Disable</option>
+                  {% endif %}
+                </select>                                                       
+                </div>
+                <div class="col-sm-4">
+                <input type="text" name="payment_doku_channel_name_list[22]" value="{{  payment_doku_channel_name_list[22]=='' ? 'Bank Transfer Sinarmas' : payment_doku_channel_name_list[22]  }}" placeholder="Input channel name Bank Transfer Sinarmas" class="form-control">
+                <input type="hidden" name="payment_doku_channel_categori[22]" value="Payment With Virtual Account">  
+                </div>
+                <div class="col-sm-3">
+                <input type="text" name="payment_doku_bin_list[22]" value="{{  payment_doku_bin_list[22]=='' ? '99999' : payment_doku_bin_list[22]  }}" placeholder="Input bin Bank Transfer Sinarmas" class="form-control">  
+                </div>                        
+        </div>
+
+      </div>
+    </div>  
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i>Parameter Account for other Channel</h3>
+      </div>
+      <div class="panel-body">
+            <div class="form-group">
+            <label class="col-sm-2 control-label" for=""></label>      
+            <div class="col-sm-3" align="center">MALLID
+            </div>
+            <div class="col-sm-3" align="center">CHAIN
+            </div>
+            <div class="col-sm-4" align="center">SHAREDKEY
+            </div>
+            </div>
+
+            <div class="form-group">
+            <label class="col-sm-2 control-label" for="">Mallid, Chain dan Sharedkey Channel Klikpay BCA</label>      
+            <div class="col-sm-3">
+                <input type="text" name="payment_doku_mallid_KlikpayBCA" value="{{  payment_doku_mallid_KlikpayBCA=='' ? '' : payment_doku_mallid_KlikpayBCA  }}" placeholder="Input Mallid for channel Klikpay BCA" class="form-control">
+            </div>
+            <div class="col-sm-3">
+                <input type="text" name="payment_doku_chain_KlikpayBCA" value="{{  payment_doku_chain_KlikpayBCA=='' ? '' : payment_doku_chain_KlikpayBCA  }}" placeholder="Input Chain for channel Klikpay BCA" class="form-control">
+            </div>
+            <div class="col-sm-4">
+                <input type="text" name="payment_doku_shared_KlikpayBCA" value="{{  payment_doku_shared_KlikpayBCA=='' ? '' : payment_doku_shared_KlikpayBCA  }}" placeholder="Input Sharedkey for channel Klikpay BCA" class="form-control">
+            </div>
+            </div>
+
+            <div class="form-group">
+            <label class="col-sm-2 control-label" for="">Mallid, Chain dan Sharedkey Channel Kredivo</label>      
+            <div class="col-sm-3">
+                <input type="text" name="payment_doku_mallid_kredivo" value="{{  payment_doku_mallid_kredivo=='' ? '' : payment_doku_mallid_kredivo  }}" placeholder="Input Mallid for channel Kredivo" class="form-control">
+            </div>
+            <div class="col-sm-3">
+                <input type="text" name="payment_doku_chain_kredivo" value="{{  payment_doku_chain_kredivo=='' ? '' : payment_doku_chain_kredivo  }}" placeholder="Input Chain for channel Kredivo" class="form-control">
+            </div>
+            <div class="col-sm-4">
+                <input type="text" name="payment_doku_shared_kredivo" value="{{  payment_doku_shared_kredivo=='' ? '' : payment_doku_shared_kredivo  }}" placeholder="Input Sharedkey for channel Kredivo" class="form-control">
+            </div>
+            </div>
+
+            <div class="form-group">
+            <label class="col-sm-2 control-label" for="">Mallid, Chain dan Sharedkey Channel VA BNI</label>      
+            <div class="col-sm-3">
+                <input type="text" name="payment_doku_mallid_va_bni" value="{{  payment_doku_mallid_va_bni=='' ? '' : payment_doku_mallid_va_bni  }}" placeholder="Input Mallid for channel VA BNI" class="form-control">
+            </div>
+            <div class="col-sm-3">
+                <input type="text" name="payment_doku_chain_va_bni" value="{{  payment_doku_chain_va_bni=='' ? '' : payment_doku_chain_va_bni  }}" placeholder="Input Chain for channel VA BNI" class="form-control">
+            </div>
+            <div class="col-sm-4">
+                <input type="text" name="payment_doku_shared_va_bni" value="{{  payment_doku_shared_va_bni=='' ? '' : payment_doku_shared_va_bni  }}" placeholder="Input Sharedkey for channel VA BNI" class="form-control">
+            </div>
+            </div>
+
+            <div class="form-group">
+            <label class="col-sm-2 control-label" for="">Mallid, Chain dan Sharedkey Channel VA Sinarmas</label>      
+            <div class="col-sm-3">
+                <input type="text" name="payment_doku_mallid_va_sinarmas" value="{{  payment_doku_mallid_va_sinarmas=='' ? '' : payment_doku_mallid_va_sinarmas  }}" placeholder="Input Mallid for channel VA Sinarmas" class="form-control">
+            </div>
+            <div class="col-sm-3">
+                <input type="text" name="payment_doku_chain_va_sinarmas" value="{{  payment_doku_chain_va_sinarmas=='' ? '' : payment_doku_chain_va_sinarmas  }}" placeholder="Input Chain for channel VA Sinarmas" class="form-control">
+            </div>
+            <div class="col-sm-4">
+                <input type="text" name="payment_doku_shared_va_sinarmas" value="{{  payment_doku_shared_va_sinarmas=='' ? '' : payment_doku_shared_va_sinarmas  }}" placeholder="Input Sharedkey for channel VA Sinarmas" class="form-control">
+            </div>
+            </div>
+
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i>Installment On Us dan Off Us </h3>
+      </div>
+      <div class="panel-body">
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="">Use Installment On Us dan Off Us</label>     
+            <div class="col-sm-10">
+                <select name="payment_doku_installment_status" id="payment_doku_installment_status" class="form-control">
+                {% if payment_doku_installment_status %}
+                  <option value="1" selected="selected">Yes</option>
+                  <option value="0">No</option>
+                  {% else %}
+                  <option value="1">Yes</option>
+                  <option value="0" selected="selected">No</option>
+                  {% endif %}
+                </select>                                       
+                <span class="breadcrumb">Are you using Installment On dan Off Us Credit Card process? No if you unsure.</span>
+            </div>            
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="">Minimum Amount For Allowed Installment On Us and Off Us</label>      
+            <div class="col-sm-10">
+                <input type="text" name="payment_doku_installment_minimum" value="{{  payment_doku_installment_minimum=='' ? '500000' : payment_doku_installment_minimum  }}" placeholder="Input Amount Minimum Allowed Installment" class="form-control">
+            </div>
+        </div>
+
+                  <div class="col-sm-12">
+                          <table id="account" class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+          <td class="text-left required">Name Description</td>
+          <td class="text-left required">Acquirer Code Bank</td>
+          <td class="text-left required">Promo Code</td>
+          <td class="text-left required">Tenor</td>
+          <td class="text-left required">Type Installment</td>
+          <td></td>
+          </tr>
+        </thead>
+                <tbody>
+          {% set account_row = 0 %}
+          {% for key, installment in payment_doku_installment %}
+          <tr id="account-row{{ account_row }}">
+          <td class="text-left">
+            <input type="text" name="payment_doku_installment[{{ account_row }}][installment_name]" placeholder="Input description name for installment" class="form-control" value="{{ installment.installment_name }}" />
+          </td>
+          <td class="text-left">
+            <input type="text" name="payment_doku_installment[{{ account_row }}][acquirer_code]" placeholder="Input Acquirer Code" class="form-control" value="{{ installment.acquirer_code }}" />
+          </td>
+          <td class="text-left">
+            <input type="text" name="payment_doku_installment[{{ account_row }}][promo_code]" placeholder="Input Promo code" class="form-control" value="{{ installment.promo_code }}" />
+                      
+          </td>
+          <td class="text-left">
+            <input type="text" name="payment_doku_installment[{{ account_row }}][tenor]" placeholder="Input Tenor" class="form-control" value="{{ installment.tenor }}" />
+          </td>
+
+          </td>
+          <td class="text-left">
+                <select name="payment_doku_installment[{{ account_row }}][type]" id="payment_doku_installment[{{ account_row }}][type]" class="form-control">
+                {% if installment.type==0 %}
+                  <option value="0" selected="selected">Installment On Us</option>
+                  <option value="1">Installment Off Us</option>
+                  {% else %}
+                  <option value="0">Installment On Us</option>
+                  <option value="1" selected="selected">Installment Off Us</option>
+                  {% endif %}
+                </select>                                       
+          </td>
+          
+          <td class="text-left"><button type="button" onclick="$('#account-row{{ account_row }}').remove();" data-toggle="tooltip" title="Remove data Installment" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+          </tr>
+          {% set account_row = account_row + 1 %}
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+          <td colspan="5"></td>
+          <td class="text-left"><button type="button" onclick="addInstallment();" data-toggle="tooltip" title="Add Data Installment" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+          </tr>
+        </tfoot>
+        </table>
+          </div>
+      </div>
+      </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ url_title }}</h3>
+      </div>
+      <div class="panel-body">
+
+        <div class="form-group required">     
+            <label class="col-sm-2 control-label" for="input-sort-order">Identify</label>
+            <div class="col-sm-10">
+                <input type="text" value="{{ url_identify }}" class="form-control" readonly="readonly"/>
+            </div>      
+        </div>
+
+        <div class="form-group required">     
+            <label class="col-sm-2 control-label" for="input-sort-order">Notify</label>
+            <div class="col-sm-10">
+                <input type="text" value="{{ url_notify }}" class="form-control" readonly="readonly"/>
+            </div>      
+        </div>
+
+        <div class="form-group required">     
+            <label class="col-sm-2 control-label" for="input-sort-order">Redirect</label>
+            <div class="col-sm-10">
+                <input type="text" value="{{ url_redirect }}" class="form-control" readonly="readonly"/>
+            </div>      
+        </div>
+
+        <div class="form-group required">     
+            <label class="col-sm-2 control-label" for="input-sort-order">Review</label>
+            <div class="col-sm-10">
+                <input type="text" value="{{ url_review }}" class="form-control" readonly="readonly"/>
+            </div>      
+        </div>
+        
+      </div>
+    </div>  
+          
+  </div>  
+  
+  </form>
+  
+</div>
+<script type="text/javascript"><!--
+{% if not payment_doku_installment %}
+$(document).ready(function() {
+  addInstallment();
+});
+{% endif %}
+
+var account_row = {{ account_row }};
+
+function addInstallment() {
+  html  = '<tr id="account-row' + account_row + '">';
+    html += '  <td class="text-left"><input type="text" name="payment_doku_installment[' + account_row + '][installment_name]" placeholder="Input description name for installment" class="form-control" value="" /></td>';
+    html += '  <td class="text-left"><input type="text" name="payment_doku_installment[' + account_row + '][acquirer_code]" placeholder="Input Acquirer Code for installment" class="form-control" value="" /></td>';
+    html += '  <td class="text-left"><input type="text" name="payment_doku_installment[' + account_row + '][promo_code]" placeholder="Input Promo Code exp : 001" class="form-control" value="" /></td>';
+    html += '  <td class="text-left"><input type="text" name="payment_doku_installment[' + account_row + '][tenor]" placeholder="Input Tenor exp : 03" class="form-control" value="" /></td>';
+    html += '  <td class="text-left"><select name="payment_doku_installment[' + account_row + '][type]" class="form-control">';
+    html += '  <option value="0" selected="selected">Installment On Us</option>';
+    html += '  <option value="1">Installment Off Us</option>';
+    html += '  </select></td>';
+    html += '  <td class="text-left"><button type="button" onclick="$(\'#account-row' + account_row + '\').remove();" data-toggle="tooltip" title="Remove data Installment" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+  html += '</tr>';
+
+  $('#account tbody').append(html);
+
+  account_row++;
+}
+
+
+//--></script>
+{{ footer }}
