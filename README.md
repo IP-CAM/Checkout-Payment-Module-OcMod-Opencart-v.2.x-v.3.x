@@ -46,7 +46,7 @@ Installation
 
 # Minimum Requirements: #
 
-1. Prestashop v2.0 or greater
+1. OpenCart v2.0 or greater
 2. PHP version v7.1 or greater
 3. MySQL version v5.6 or greater
 
