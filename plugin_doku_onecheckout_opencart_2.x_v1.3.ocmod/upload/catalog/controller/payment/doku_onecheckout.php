@@ -705,7 +705,7 @@ class ControllerPaymentDOKUOnecheckout extends Controller
         		$parameter = $_POST['PAYMENTCHANNEL'];
         		$arrParameter = explode("_", $parameter);
 				$data['paymentchannel'] = $arrParameter[0];
-				$data['status'] = $arrParameter[1];
+				$data['status'] = isset($arrParameter[1]) ? $arrParameter[1] : '';
 				$this->language->load('checkout/doku_redirect');
 				$this->load->model('checkout/order');
 				
