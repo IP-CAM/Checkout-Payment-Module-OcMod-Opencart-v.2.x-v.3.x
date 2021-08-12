@@ -8,15 +8,9 @@ In order to facilitate the development of e-commerce through Opencart, Doku as t
 2. Fraud detection.
 3. Email confirmation.
 
-# Doku Hosted Payment Options Avalaible on Prestashop Plugin:
-1. Credit Card:
-- Sale
-- Tokenization
-- Installment: On & Off Installment
-
-2. Doku Wallet
-
-3. Bank Transfer:
+# Doku Hosted Payment Options Avalaible on OpenCart Plugin:
+For Plugin V2 :
+1. Bank Transfer
 BCA
 CIMB Niaga
 BRI
@@ -29,7 +23,17 @@ BTN
 Maybank
 QNB
 
-4. Internet Banking:
+2. Credit Card Regular
+
+For Plugin V3 :
+1. Credit Card:
+- Sale
+- Tokenization
+- Installment: On & Off Installment
+
+2. Doku Wallet
+
+3. Internet Banking:
 BRI pay
 BCA Klikpay
 CIMB Clicks
@@ -46,9 +50,10 @@ Installation
 
 # Minimum Requirements: #
 
-1. OpenCart v2.0 or greater
-2. PHP version v7.1 or greater
-3. MySQL version v5.6 or greater
+1. OpenCart v2.0 ( FOR PLUGIN V2 )
+2. Opencart v3.0 ( FOR PLUGIN V3 )
+3. PHP version v7.1 or greater
+4. MySQL version v5.6 or greater
 
 # Installation #
 1. Put the plugin to your Opencart server.
